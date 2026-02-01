@@ -3,12 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="ADUSTECH - Official mobile application for Aliko Dangote University of Science and Technology students. Download now for Android.">
-    <meta name="keywords" content="ADUSTECH, University App, Student Portal, Android App, Download">
-    <title>ADUSTECH Mobile App - Download for Android</title>
+    <meta name="description" content="ADUSTECH - Official mobile application for Aliko Dangote University of Science and Technology students. Download now for Android and iOS.">
+    <meta name="keywords" content="ADUSTECH, University App, Student Portal, Android App, iOS App, Download">
+    <title>ADUSTECH Mobile App - Download for Android & iOS</title>
+    
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#3b82f6">
+    <meta name="msapplication-TileColor" content="#3b82f6">
+    <meta name="msapplication-TileImage" content="assets/images/icon.jpg">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://adustech.vercel.app/">
+    <meta property="og:title" content="ADUSTECH Mobile App - Download for Android & iOS">
+    <meta property="og:description" content="Official mobile application for Aliko Dangote University of Science and Technology students. Access your portal, timetable, events and more! Available on Android and iOS."
+    <meta property="og:image" content="https://adustech.vercel.app/assets/images/icon.jpg">
+    <meta property="og:image:width" content="980">
+    <meta property="og:image:height" content="980">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://adustech.vercel.app/">
+    <meta name="twitter:title" content="ADUSTECH Mobile App - Download for Android & iOS">
+    <meta name="twitter:description" content="Official mobile application for Aliko Dangote University of Science and Technology students. Access your portal, timetable, events and more! Available on Android and iOS."
+    <meta name="twitter:image" content="https://adustech.vercel.app/assets/images/icon.jpg">
     
     <!-- Favicon -->
-    <link rel="icon" type="image/png" href="assets/images/favicon.png">
+    <link rel="icon" type="image/jpeg" href="assets/images/icon.jpg">
+    <link rel="shortcut icon" type="image/jpeg" href="assets/images/icon.jpg">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/images/icon.jpg">
+    <link rel="icon" type="image/jpeg" sizes="32x32" href="assets/images/icon.jpg">
+    <link rel="icon" type="image/jpeg" sizes="16x16" href="assets/images/icon.jpg">
+    <link rel="manifest" href="site.webmanifest">
     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -88,9 +114,9 @@
                             <i class="fab fa-android"></i>
                             Download for Android
                         </a>
-                        <a href="#features" class="btn btn-secondary">
-                            <i class="fas fa-play-circle"></i>
-                            See Features
+                        <a href="#download" class="btn btn-primary" style="background: #000; border-color: #000;">
+                            <i class="fab fa-apple"></i>
+                            Download for iOS
                         </a>
                     </div>
                     <div class="hero-stats">
@@ -232,16 +258,16 @@
                     <h2 class="section-title">Get the App</h2>
                     <p class="section-description">
                         Download ADUSTECH mobile app and stay connected with your 
-                        university community. Available for Android devices.
+                        university community. Available for Android and iOS devices.
                     </p>
                     
                     <div class="download-options">
                         <div class="download-card">
                             <div class="download-card-header">
-                                <i class="fab fa-android"></i>
+                                <i class="fab fa-android" style="font-size: 2.5rem; color: #3ddc84;"></i>
                                 <div>
-                                    <h3>APK File</h3>
-                                    <p>For direct installation</p>
+                                    <h3>Android App</h3>
+                                    <p>For Android devices</p>
                                 </div>
                             </div>
                             <div class="download-card-body">
@@ -249,19 +275,19 @@
                                     <span class="file-size">~50 MB</span>
                                     <span class="version">Version 1.0.0</span>
                                 </div>
-                                <a href="downloads/adustech.apk" class="btn btn-download" download>
-                                    <i class="fas fa-download"></i>
-                                    Download APK
+                                <a href="downloads/adustech.apk" class="btn btn-download" download style="background: #3ddc84; border-color: #3ddc84;">
+                                    <i class="fab fa-android"></i>
+                                    Download for Android
                                 </a>
                             </div>
                         </div>
 
                         <div class="download-card">
                             <div class="download-card-header">
-                                <i class="fab fa-google-play"></i>
+                                <i class="fab fa-apple" style="font-size: 2.5rem; color: #000;"></i>
                                 <div>
-                                    <h3>AAB File</h3>
-                                    <p>For Google Play Store</p>
+                                    <h3>iOS App</h3>
+                                    <p>For iPhone & iPad</p>
                                 </div>
                             </div>
                             <div class="download-card-body">
@@ -269,9 +295,9 @@
                                     <span class="file-size">~45 MB</span>
                                     <span class="version">Version 1.0.0</span>
                                 </div>
-                                <a href="downloads/adustech.aab" class="btn btn-download" download>
-                                    <i class="fas fa-download"></i>
-                                    Download AAB
+                                <a href="downloads/adustech.ipa" class="btn btn-download" download style="background: #000; border-color: #000;">
+                                    <i class="fab fa-apple"></i>
+                                    Download for iOS
                                 </a>
                             </div>
                         </div>
@@ -281,12 +307,8 @@
                         <i class="fas fa-info-circle"></i>
                         <div>
                             <h4>Installation Instructions</h4>
-                            <ol>
-                                <li>Download the APK file to your Android device</li>
-                                <li>Open the downloaded file</li>
-                                <li>Enable "Install from Unknown Sources" if prompted</li>
-                                <li>Follow the on-screen instructions to complete installation</li>
-                            </ol>
+                            <p style="margin-bottom: 10px;"><strong><i class="fab fa-android"></i> Android:</strong> Download the APK file, open it, enable "Install from Unknown Sources" if prompted, and follow the installation prompts.</p>
+                            <p><strong><i class="fab fa-apple"></i> iOS:</strong> Download the IPA file or install directly from the App Store when available.</p>
                         </div>
                     </div>
                 </div>
@@ -371,7 +393,7 @@
                         <i class="fas fa-envelope"></i>
                     </div>
                     <h3>Email Support</h3>
-                    <p>support@adustech.edu.ng</p>
+                    <p><a href="mailto:adustechapp@gmail.com" style="color: inherit; text-decoration: none;">adustechapp@gmail.com</a></p>
                 </div>
 
                 <div class="contact-card">
@@ -379,7 +401,7 @@
                         <i class="fas fa-phone"></i>
                     </div>
                     <h3>Phone</h3>
-                    <p>+234 XXX XXX XXXX</p>
+                    <p><a href="tel:+2349073471497" style="color: inherit; text-decoration: none;">+234 907 347 1497</a></p>
                 </div>
 
                 <div class="contact-card">
@@ -445,8 +467,8 @@
                 <div class="footer-section">
                     <h3 class="footer-title">Download</h3>
                     <ul class="footer-links">
-                        <li><a href="downloads/adustech.apk" download>APK File</a></li>
-                        <li><a href="downloads/adustech.aab" download>AAB File</a></li>
+                        <li><a href="downloads/adustech.apk" download><i class="fab fa-android"></i> Android App</a></li>
+                        <li><a href="downloads/adustech.ipa" download><i class="fab fa-apple"></i> iOS App</a></li>
                         <li><a href="pages/installation-guide.html">Installation Guide</a></li>
                         <li><a href="pages/system-requirements.html">System Requirements</a></li>
                     </ul>
