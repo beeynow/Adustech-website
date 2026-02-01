@@ -1,0 +1,16 @@
+# Dependencies
+node_modules/
+
+# Development files
+*.log
+*.tmp
+.DS_Store
+Thumbs.db
+
+# Documentation
+README.md
+*.md
+
+# Git
+.git/
+.gitignore
