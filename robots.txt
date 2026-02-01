@@ -1,0 +1,38 @@
+# ADUSTECH Website - Robots.txt
+# This file tells search engines which pages to crawl
+
+# Allow all search engines
+User-agent: *
+Allow: /
+
+# Disallow access to specific directories
+Disallow: /downloads/
+
+# Sitemap location
+Sitemap: https://adustech.vercel.app/sitemap.xml
+
+# Crawl delay (optional - be nice to servers)
+Crawl-delay: 1
+
+# Specific rules for common bots
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 1
+
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
+
+User-agent: Slurp
+Allow: /
+Crawl-delay: 1
+
+# Block bad bots (optional)
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
