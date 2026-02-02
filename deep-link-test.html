@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adustech Tech - Deep Link Test</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        
+        h1 {
+            color: #1976D2;
+            margin-bottom: 10px;
+            font-size: 32px;
+        }
+        
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 16px;
+        }
+        
+        .link-section {
+            margin-bottom: 30px;
+        }
+        
+        .link-section h2 {
+            color: #333;
+            font-size: 18px;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #E6F4FE;
+        }
+        
+        .link-button {
+            display: block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            padding: 15px 25px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            font-weight: 600;
+        }
+        
+        .link-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+        
+        .link-button:active {
+            transform: translateY(0);
+        }
+        
+        .scheme-button {
+            background: linear-gradient(135deg, #1976D2 0%, #42A5F6 100%);
+        }
+        
+        .info-box {
+            background: #E6F4FE;
+            border-left: 4px solid #1976D2;
+            padding: 15px;
+            margin-top: 30px;
+            border-radius: 8px;
+        }
+        
+        .info-box h3 {
+            color: #1976D2;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+        
+        .info-box p {
+            color: #333;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        
+        .code {
+            background: #f5f5f5;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 13px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 Adustech Tech</h1>
+        <p class="subtitle">Deep Link Testing Page</p>
+        
+        <div class="link-section">
+            <h2>📱 Universal Links (HTTPS)</h2>
+            <a href="https://beeynow.online/" class="link-button">Open App Home</a>
+            <a href="https://beeynow.online/profile" class="link-button">Open Profile</a>
+            <a href="https://beeynow.online/events" class="link-button">Open Events</a>
+            <a href="https://beeynow.online/department?id=123" class="link-button">Open Department</a>
+            <a href="https://beeynow.online/post?id=456" class="link-button">Open Post</a>
+            <a href="https://beeynow.online/channel?id=789" class="link-button">Open Channel</a>
+        </div>
+        
+        <div class="link-section">
+            <h2>🔗 App Scheme Links</h2>
+            <a href="adustech://dashboard" class="link-button scheme-button">Open Dashboard</a>
+            <a href="adustech://profile" class="link-button scheme-button">Open Profile</a>
+            <a href="adustech://events" class="link-button scheme-button">Open Events</a>
+        </div>
+        
+        <div class="info-box">
+            <h3>ℹ️ How Deep Links Work</h3>
+            <p>
+                <strong>If app is installed:</strong> Links will open directly in the Adustech Tech app.<br><br>
+                <strong>If app is not installed:</strong> Universal links (HTTPS) will open this website, 
+                while app scheme links won't work.<br><br>
+                <strong>URL Format:</strong><br>
+                • Universal: <span class="code">https://beeynow.online/page</span><br>
+                • App Scheme: <span class="code">adustech://page</span>
+            </p>
+        </div>
+    </div>
+    
+    <script>
+        // Auto-redirect after timeout if app doesn't open
+        const links = document.querySelectorAll('.link-button');
+        links.forEach(link => {
+            link.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                
+                // For app scheme links, provide fallback
+                if (href.startsWith('adustech://')) {
+                    e.preventDefault();
+                    
+                    // Try to open the app
+                    window.location.href = href;
+                    
+                    // If app doesn't open in 2 seconds, show message
+                    setTimeout(() => {
+                        const install = confirm('App not installed. Would you like to visit the website?');
+                        if (install) {
+                            window.location.href = 'https://beeynow.online';
+                        }
+                    }, 2000);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

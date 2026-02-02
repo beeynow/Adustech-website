@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Opening Adustech Tech...</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 60px 40px;
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        
+        .icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+            animation: bounce 1s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        h1 {
+            color: #1976D2;
+            margin-bottom: 15px;
+            font-size: 28px;
+        }
+        
+        p {
+            color: #666;
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+        
+        .button {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            padding: 15px 40px;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: transform 0.2s;
+            margin: 5px;
+        }
+        
+        .button:hover {
+            transform: scale(1.05);
+        }
+        
+        .button-secondary {
+            background: #E6F4FE;
+            color: #1976D2;
+        }
+        
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid #E6F4FE;
+            border-top-color: #1976D2;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="spinner"></div>
+        <div class="icon">📱</div>
+        <h1>Opening Adustech Tech...</h1>
+        <p id="message">Attempting to open the app. If nothing happens, the app may not be installed.</p>
+        <div id="buttons" style="display: none;">
+            <a href="https://beeynow.online" class="button">Visit Website</a>
+            <a href="#" onclick="location.reload()" class="button button-secondary">Try Again</a>
+        </div>
+    </div>
+    
+    <script>
+        // Get URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const path = urlParams.get('path') || '/';
+        
+        // Construct deep link
+        const deepLink = `https://beeynow.online${path}`;
+        const appScheme = `adustech://${path.substring(1)}`;
+        
+        // Try to open the app
+        let appOpened = false;
+        
+        // Try universal link first
+        window.location.href = deepLink;
+        
+        // Fallback to app scheme after 500ms
+        setTimeout(() => {
+            if (!appOpened) {
+                window.location.href = appScheme;
+            }
+        }, 500);
+        
+        // After 3 seconds, show fallback options
+        setTimeout(() => {
+            if (!appOpened) {
+                document.getElementById('message').textContent = 
+                    "Couldn't open the app. You can visit our website or try again.";
+                document.getElementById('buttons').style.display = 'block';
+            }
+        }, 3000);
+        
+        // Detect if app opened (user left the page)
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                appOpened = true;
+            }
+        });
+        
+        window.addEventListener('blur', () => {
+            appOpened = true;
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appID": "TEAM_ID.com.adustech.app",
+        "paths": [
+          "/post/*",
+          "/event/*",
+          "/channel/*",
+          "/department/*",
+          "/profile",
+          "/events",
+          "/timetable/*",
+          "/login",
+          "/register",
+          "/"
+        ]
+      }
+    ]
+  },
+  "webcredentials": {
+    "apps": [
+      "TEAM_ID.com.adustech.app"
+    ]
+  }
+}
