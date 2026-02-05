@@ -48,6 +48,24 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
+    <!-- Countdown Redirect Script - Load before everything else -->
+    <script src="config.js"></script>
+    <script>
+        // Check if countdown is active and redirect if necessary
+        (function() {
+            // Only check if we're not already on the countdown page
+            if (window.location.pathname.includes('countdown.html')) {
+                return;
+            }
+            
+            // Check if countdown is active
+            if (isCountdownActive()) {
+                // Redirect to countdown page
+                window.location.replace('countdown.html');
+            }
+        })();
+    </script>
+    
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     

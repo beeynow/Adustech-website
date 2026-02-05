@@ -3,13 +3,16 @@
 
 const WEBSITE_CONFIG = {
   // Countdown Configuration
+  // CHANGE THESE VALUES IN .env FILE OR HERE
   countdown: {
     // Enable or disable countdown mode
+    // Set to false to make website immediately accessible
     enabled: true,
     
     // Set countdown duration in hours from now
     // This will be used if no specific launch date is set
-    hoursFromNow: 10,
+    // CHANGE THIS VALUE TO ADJUST COUNTDOWN DURATION
+    hoursFromNow: 10,  // Change this number in .env file: COUNTDOWN_HOURS=10
     
     // OR set a specific launch date/time (UTC)
     // Format: 'YYYY-MM-DDTHH:mm:ssZ'

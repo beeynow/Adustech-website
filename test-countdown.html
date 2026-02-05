@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Countdown Configuration</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 15px;
+            background: #f9f9f9;
+            border-left: 4px solid #667eea;
+        }
+        .status {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin: 5px 0;
+        }
+        .status.active {
+            background: #ff6b6b;
+            color: white;
+        }
+        .status.inactive {
+            background: #51cf66;
+            color: white;
+        }
+        code {
+            background: #e9ecef;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+        button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 5px;
+        }
+        button:hover {
+            background: #5568d3;
+        }
+        .info {
+            background: #d3f9d8;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        .warning {
+            background: #ffe8cc;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        .time-display {
+            font-size: 24px;
+            font-weight: bold;
+            color: #667eea;
+            margin: 10px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background: #667eea;
+            color: white;
+        }
+        tr:hover {
+            background: #f5f5f5;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🕐 Countdown Configuration Test</h1>
+        
+        <div class="test-section">
+            <h2>Current Status</h2>
+            <p><strong>Countdown Active:</strong> <span class="status" id="countdownStatus">Checking...</span></p>
+            <p><strong>Config Loaded:</strong> <span id="configLoaded">Checking...</span></p>
+            <p><strong>Current Time:</strong> <span id="currentTime"></span></p>
+            <p><strong>Target Launch Time:</strong> <span id="targetTime"></span></p>
+            <div class="time-display" id="timeRemaining">Calculating...</div>
+        </div>
+
+        <div class="test-section">
+            <h2>Configuration Details</h2>
+            <table>
+                <tr>
+                    <th>Setting</th>
+                    <th>Value</th>
+                </tr>
+                <tr>
+                    <td>Countdown Enabled</td>
+                    <td id="configEnabled">-</td>
+                </tr>
+                <tr>
+                    <td>Hours From Now</td>
+                    <td id="configHours">-</td>
+                </tr>
+                <tr>
+                    <td>Launch Date (if set)</td>
+                    <td id="configLaunchDate">-</td>
+                </tr>
+                <tr>
+                    <td>Storage Key</td>
+                    <td id="configStorageKey">-</td>
+                </tr>
+                <tr>
+                    <td>Stored Target Time</td>
+                    <td id="storedTime">-</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="test-section">
+            <h2>Test Actions</h2>
+            <button onclick="clearCountdown()">🗑️ Clear Countdown Data</button>
+            <button onclick="testRedirect()">🔄 Test Redirect</button>
+            <button onclick="viewCountdownPage()">👁️ View Countdown Page</button>
+            <button onclick="goToMainSite()">🏠 Go to Main Site</button>
+            <button onclick="location.reload()">♻️ Refresh Page</button>
+        </div>
+
+        <div class="info">
+            <strong>ℹ️ How to Change Countdown Duration:</strong><br>
+            1. Edit <code>website/.env</code><br>
+            2. Change <code>COUNTDOWN_HOURS=10</code> to desired hours<br>
+            3. Click "Clear Countdown Data" button above<br>
+            4. Refresh the page
+        </div>
+
+        <div class="warning">
+            <strong>⚠️ Note:</strong> The countdown persists in localStorage. To test different durations, 
+            you must clear the countdown data first.
+        </div>
+
+        <div class="test-section">
+            <h2>Quick Test Values</h2>
+            <p>Edit <code>config.js</code> and change <code>hoursFromNow</code> to:</p>
+            <ul>
+                <li><code>0.0167</code> = 1 minute countdown</li>
+                <li><code>0.0833</code> = 5 minutes countdown</li>
+                <li><code>1</code> = 1 hour countdown</li>
+                <li><code>10</code> = 10 hours countdown (current default)</li>
+                <li><code>24</code> = 24 hours (1 day) countdown</li>
+                <li><code>168</code> = 1 week countdown</li>
+            </ul>
+            <p>Or set <code>enabled: false</code> to disable countdown completely.</p>
+        </div>
+    </div>
+
+    <script src="config.js"></script>
+    <script>
+        function updateStatus() {
+            const now = new Date();
+            document.getElementById('currentTime').textContent = now.toLocaleString();
+
+            // Check if config is loaded
+            if (typeof WEBSITE_CONFIG !== 'undefined') {
+                document.getElementById('configLoaded').textContent = '✅ Yes';
+                
+                // Display config
+                document.getElementById('configEnabled').textContent = WEBSITE_CONFIG.countdown.enabled ? '✅ True' : '❌ False';
+                document.getElementById('configHours').textContent = WEBSITE_CONFIG.countdown.hoursFromNow;
+                document.getElementById('configLaunchDate').textContent = WEBSITE_CONFIG.countdown.launchDate || 'Not set (using hoursFromNow)';
+                document.getElementById('configStorageKey').textContent = WEBSITE_CONFIG.countdown.storageKey;
+                
+                // Check localStorage
+                const storedTime = localStorage.getItem(WEBSITE_CONFIG.countdown.storageKey);
+                if (storedTime) {
+                    const targetDate = new Date(storedTime);
+                    document.getElementById('storedTime').textContent = targetDate.toLocaleString();
+                    document.getElementById('targetTime').textContent = targetDate.toLocaleString();
+                    
+                    // Calculate time remaining
+                    const distance = targetDate - now;
+                    if (distance > 0) {
+                        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                        
+                        document.getElementById('timeRemaining').textContent = 
+                            `${days}d ${hours}h ${minutes}m ${seconds}s remaining`;
+                    } else {
+                        document.getElementById('timeRemaining').textContent = '⏰ Countdown expired!';
+                    }
+                } else {
+                    document.getElementById('storedTime').textContent = 'Not set (will be set on first visit)';
+                    document.getElementById('targetTime').textContent = 'Will be calculated on first visit';
+                    document.getElementById('timeRemaining').textContent = 'No active countdown';
+                }
+                
+                // Check if countdown is active
+                if (typeof isCountdownActive === 'function') {
+                    const isActive = isCountdownActive();
+                    const statusElement = document.getElementById('countdownStatus');
+                    statusElement.textContent = isActive ? '🔴 Active (website blocked)' : '🟢 Inactive (website accessible)';
+                    statusElement.className = isActive ? 'status active' : 'status inactive';
+                }
+            } else {
+                document.getElementById('configLoaded').textContent = '❌ No (check config.js)';
+            }
+        }
+
+        function clearCountdown() {
+            if (typeof WEBSITE_CONFIG !== 'undefined') {
+                localStorage.removeItem(WEBSITE_CONFIG.countdown.storageKey);
+                alert('✅ Countdown data cleared! Refresh the page to start a new countdown.');
+                updateStatus();
+            }
+        }
+
+        function testRedirect() {
+            if (typeof isCountdownActive === 'function' && isCountdownActive()) {
+                alert('🔄 Countdown is active. Redirecting to countdown page...');
+                window.location.href = 'countdown.html';
+            } else {
+                alert('✅ Countdown is not active. Main website is accessible.');
+            }
+        }
+
+        function viewCountdownPage() {
+            window.open('countdown.html', '_blank');
+        }
+
+        function goToMainSite() {
+            window.location.href = 'index.html';
+        }
+
+        // Update status every second
+        updateStatus();
+        setInterval(updateStatus, 1000);
+    </script>
+</body>
+</html>
