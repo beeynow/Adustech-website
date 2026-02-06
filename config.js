@@ -3,25 +3,31 @@
 
 const WEBSITE_CONFIG = {
   // Countdown Configuration
-  // CHANGE THESE VALUES IN .env FILE OR HERE
+  // CHANGE THESE VALUES WHEN YOU DEPLOY
   countdown: {
     // Enable or disable countdown mode
     // Set to false to make website immediately accessible
     enabled: true,
     
-    // Set countdown duration in hours from now
+    // Set countdown duration in hours from countdownStartTime
     // This will be used if no specific launch date is set
     // CHANGE THIS VALUE TO ADJUST COUNTDOWN DURATION
-    hoursFromNow: 10,  // Change this number in .env file: COUNTDOWN_HOURS=10
+    hoursFromNow: 10,  // Change this number: COUNTDOWN_HOURS=10
+    
+    // Fixed start time for countdown (when the countdown was first set)
+    // This ensures ALL USERS see the SAME countdown
+    // Format: ISO 8601 timestamp (UTC)
+    // Set this to the EXACT time you want the countdown to start from
+    // Example: '2026-02-05T15:00:00Z' means countdown starts from Feb 5, 2026 at 3:00 PM UTC
+    // IMPORTANT: Change this to the current time when you deploy!
+    countdownStartTime: '2026-02-05T15:00:00Z', // ⚠️ CHANGE THIS WHEN YOU DEPLOY
     
     // OR set a specific launch date/time (UTC)
     // Format: 'YYYY-MM-DDTHH:mm:ssZ'
-    // Example: '2026-02-06T00:00:00Z'
-    // Leave as null to use hoursFromNow instead
+    // Example: '2026-02-06T01:00:00Z' means launch at Feb 6, 2026 at 1:00 AM UTC
+    // This takes precedence over hoursFromNow
+    // Leave as null to use countdownStartTime + hoursFromNow
     launchDate: null,
-    
-    // Countdown expiry key for localStorage
-    storageKey: 'adustech_launch_time',
   },
   
   // Website metadata
@@ -32,34 +38,18 @@ const WEBSITE_CONFIG = {
   }
 };
 
-// Calculate the target launch time
+// Get countdown target time (synchronized for all users - NO localStorage)
 function getCountdownTarget() {
-  const config = WEBSITE_CONFIG.countdown;
-  
-  // Check if we already have a countdown target in localStorage
-  const storedTarget = localStorage.getItem(config.storageKey);
-  if (storedTarget) {
-    const targetTime = new Date(storedTarget);
-    // Only use stored target if it's in the future
-    if (targetTime > new Date()) {
-      return targetTime;
-    }
+  // If specific launch date is set, use it (highest priority)
+  if (WEBSITE_CONFIG.countdown.launchDate) {
+    return new Date(WEBSITE_CONFIG.countdown.launchDate);
   }
   
-  // Calculate new target time
-  let targetTime;
-  
-  if (config.launchDate) {
-    // Use specific launch date
-    targetTime = new Date(config.launchDate);
-  } else {
-    // Use hours from now
-    targetTime = new Date();
-    targetTime.setHours(targetTime.getHours() + config.hoursFromNow);
-  }
-  
-  // Store the target time
-  localStorage.setItem(config.storageKey, targetTime.toISOString());
+  // Calculate target from fixed countdown start time
+  // This ensures ALL users see the SAME countdown
+  const startTime = new Date(WEBSITE_CONFIG.countdown.countdownStartTime);
+  const hoursToAdd = WEBSITE_CONFIG.countdown.hoursFromNow;
+  const targetTime = new Date(startTime.getTime() + hoursToAdd * 60 * 60 * 1000);
   
   return targetTime;
 }

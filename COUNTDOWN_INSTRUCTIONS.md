@@ -3,35 +3,45 @@
 ## Overview
 The website includes a beautiful countdown timer that makes the site inaccessible until a specified time. This is perfect for launch announcements!
 
+**IMPORTANT:** The countdown is now **synchronized for all users** - everyone sees the same countdown time!
+
 ---
 
 ## 📝 How to Configure
 
-### Option 1: Using .env File (Recommended)
-
-1. **Open `website/.env`**
-2. **Change the countdown duration:**
-   ```bash
-   # Set countdown in hours (from current time)
-   COUNTDOWN_HOURS=10
-   ```
-
-3. **Enable/Disable countdown:**
-   ```bash
-   # Set to 'true' to enable countdown, 'false' to disable
-   COUNTDOWN_ENABLED=true
-   ```
-
-### Option 2: Using config.js (Alternative)
+### **Quick Setup (When Deploying)**
 
 1. **Open `website/config.js`**
-2. **Modify the configuration:**
+2. **Set the countdown start time to NOW:**
+   ```javascript
+   countdownStartTime: '2026-02-05T15:30:00Z', // Change to current UTC time
+   ```
+   
+3. **Set how many hours from that time:**
+   ```javascript
+   hoursFromNow: 10, // 10 hours from the start time
+   ```
+
+### **Automatic Setup (Recommended)**
+
+Run this command to automatically set the current time:
+```bash
+cd website
+node -e "const fs=require('fs'); const now=new Date().toISOString(); const cfg=fs.readFileSync('config.js','utf8'); fs.writeFileSync('config.js', cfg.replace(/countdownStartTime: '[^']+'/,'countdownStartTime: \\''+now+'\\''));"
+echo "Countdown start time set to current time!"
+```
+
+### **Manual Configuration**
+
+1. **Open `website/config.js`**
+2. **Modify these settings:**
    ```javascript
    const WEBSITE_CONFIG = {
      countdown: {
        enabled: true,        // Set to false to disable countdown
-       hoursFromNow: 10,     // Change to desired hours (e.g., 24 for 1 day)
-       launchDate: null,     // Or set specific date: '2026-02-06T00:00:00Z'
+       hoursFromNow: 10,     // Hours from countdownStartTime
+       countdownStartTime: '2026-02-05T15:00:00Z', // START TIME (UTC)
+       launchDate: null,     // Or set specific launch date
      }
    };
    ```
@@ -111,25 +121,46 @@ COUNTDOWN_HOURS=0
 
 ---
 
-## 🔄 Resetting the Countdown
+## 🔄 How It Works Now (Synchronized)
 
-If you need to reset the countdown for testing:
+**OLD SYSTEM (localStorage):**
+- Each user had their own countdown
+- Different users saw different times
+- Countdown reset on browser clear
 
-### Method 1: Clear Browser Storage
-1. Open browser developer tools (F12)
-2. Go to Application/Storage tab
-3. Find localStorage
-4. Delete key: `adustech_launch_time`
-5. Refresh the page
+**NEW SYSTEM (Fixed Server Time):**
+- ✅ All users see the SAME countdown
+- ✅ Countdown is synchronized globally
+- ✅ No localStorage dependency
+- ✅ Works across all browsers/devices
 
-### Method 2: Private/Incognito Window
-- Open the website in a private/incognito window
-- This starts a fresh countdown
+**How Synchronization Works:**
+1. You set `countdownStartTime` to a fixed point (e.g., deployment time)
+2. System calculates: `launchTime = countdownStartTime + hoursFromNow`
+3. All users calculate from the SAME start time
+4. Everyone sees the same countdown!
 
-### Method 3: Change Configuration
-- Simply change `COUNTDOWN_HOURS` in .env
-- Clear localStorage (Method 1)
-- Refresh the page
+## 🔄 Changing the Countdown
+
+To change the countdown duration:
+
+### Method 1: Change Hours Only
+Edit `config.js`:
+```javascript
+hoursFromNow: 24, // Change from 10 to 24 hours
+```
+This changes the duration from the SAME start time.
+
+### Method 2: Reset Everything
+1. Set new `countdownStartTime` to current time
+2. Set new `hoursFromNow`
+3. Refresh website
+
+### Method 3: Use Specific Launch Date
+```javascript
+launchDate: '2026-02-06T12:00:00Z', // Launch at this exact time
+```
+This overrides `hoursFromNow`.
 
 ---
 
