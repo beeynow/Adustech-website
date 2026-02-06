@@ -18,7 +18,7 @@ const WEBSITE_CONFIG = {
     // This ensures ALL USERS see the SAME countdown
     // Format: ISO 8601 timestamp (UTC)
     // ⚠️ IMPORTANT: This gets automatically updated when you run set-countdown-now.sh
-    countdownStartTime: '2026-02-05T15:00:00Z',
+    countdownStartTime: '2026-02-06T16:47:33Z',
     
     // OR set a specific launch date/time (UTC)
     // Format: 'YYYY-MM-DDTHH:mm:ssZ'
