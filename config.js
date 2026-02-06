@@ -3,30 +3,28 @@
 
 const WEBSITE_CONFIG = {
   // Countdown Configuration
-  // CHANGE THESE VALUES WHEN YOU DEPLOY
+  // ⚙️ CONFIGURABLE VIA .env FILE
   countdown: {
     // Enable or disable countdown mode
-    // Set to false to make website immediately accessible
+    // From .env: COUNTDOWN_ENABLED=true/false
     enabled: true,
     
-    // Set countdown duration in hours from countdownStartTime
-    // This will be used if no specific launch date is set
-    // CHANGE THIS VALUE TO ADJUST COUNTDOWN DURATION
-    hoursFromNow: 10,  // Change this number: COUNTDOWN_HOURS=10
+    // Countdown duration in MINUTES (easier for testing!)
+    // From .env: COUNTDOWN_MINUTES=10 (for 10 minutes)
+    // Examples: 10 minutes, 60 minutes (1 hour), 600 minutes (10 hours)
+    minutesFromNow: 10,  // ⏱️ 10 MINUTES for easy testing
     
     // Fixed start time for countdown (when the countdown was first set)
     // This ensures ALL USERS see the SAME countdown
     // Format: ISO 8601 timestamp (UTC)
-    // Set this to the EXACT time you want the countdown to start from
-    // Example: '2026-02-05T15:00:00Z' means countdown starts from Feb 5, 2026 at 3:00 PM UTC
-    // IMPORTANT: Change this to the current time when you deploy!
-    countdownStartTime: '2026-02-05T15:00:00Z', // ⚠️ CHANGE THIS WHEN YOU DEPLOY
+    // ⚠️ IMPORTANT: This gets automatically updated when you run set-countdown-now.sh
+    countdownStartTime: '2026-02-05T15:00:00Z',
     
     // OR set a specific launch date/time (UTC)
     // Format: 'YYYY-MM-DDTHH:mm:ssZ'
-    // Example: '2026-02-06T01:00:00Z' means launch at Feb 6, 2026 at 1:00 AM UTC
-    // This takes precedence over hoursFromNow
-    // Leave as null to use countdownStartTime + hoursFromNow
+    // Example: '2026-02-06T01:00:00Z'
+    // This takes precedence over minutesFromNow
+    // Leave as null to use countdownStartTime + minutesFromNow
     launchDate: null,
   },
   
@@ -48,8 +46,8 @@ function getCountdownTarget() {
   // Calculate target from fixed countdown start time
   // This ensures ALL users see the SAME countdown
   const startTime = new Date(WEBSITE_CONFIG.countdown.countdownStartTime);
-  const hoursToAdd = WEBSITE_CONFIG.countdown.hoursFromNow;
-  const targetTime = new Date(startTime.getTime() + hoursToAdd * 60 * 60 * 1000);
+  const minutesToAdd = WEBSITE_CONFIG.countdown.minutesFromNow;
+  const targetTime = new Date(startTime.getTime() + minutesToAdd * 60 * 1000);
   
   return targetTime;
 }
