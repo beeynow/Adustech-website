@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobile Countdown Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            min-height: 100vh;
+        }
+        .container {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+        }
+        h1 { font-size: 24px; margin-bottom: 20px; }
+        .status { 
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 10px;
+            background: rgba(255,255,255,0.2);
+        }
+        .success { background: rgba(76,175,80,0.5); }
+        .error { background: rgba(244,67,54,0.5); }
+        button {
+            width: 100%;
+            padding: 15px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 10px;
+            background: white;
+            color: #667eea;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        button:active { transform: scale(0.98); }
+        .info { font-size: 12px; opacity: 0.9; margin-top: 5px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📱 Mobile Countdown Test</h1>
+        <div id="status">Testing...</div>
+        <button onclick="testCountdown()">🔄 Refresh Test</button>
+        <button onclick="goToCountdown()">⏱️ Go to Countdown Page</button>
+        <button onclick="goToMain()">🏠 Go to Main Site</button>
+    </div>
+
+    <script src="config.js"></script>
+    <script>
+        function testCountdown() {
+            const statusDiv = document.getElementById('status');
+            try {
+                const now = new Date();
+                const target = getCountdownTarget();
+                const isActive = isCountdownActive();
+                const diff = target - now;
+                const minutesLeft = Math.floor(diff / 60000);
+                const secondsLeft = Math.floor((diff % 60000) / 1000);
+                
+                statusDiv.innerHTML = `
+                    <div class="status ${isActive ? 'success' : 'error'}">
+                        <strong>Countdown Status:</strong> ${isActive ? '✅ ACTIVE' : '❌ NOT ACTIVE'}
+                    </div>
+                    <div class="status">
+                        <strong>Current Time:</strong><br>${now.toLocaleString()}
+                    </div>
+                    <div class="status">
+                        <strong>Target Time:</strong><br>${target.toLocaleString()}
+                    </div>
+                    <div class="status">
+                        <strong>Time Remaining:</strong><br>
+                        ${minutesLeft} minutes ${secondsLeft} seconds
+                    </div>
+                    <div class="status">
+                        <strong>What should happen:</strong><br>
+                        ${isActive ? 
+                            '✅ You should be redirected to countdown.html' : 
+                            '❌ You should see the main website'}
+                    </div>
+                    <div class="info">
+                        Last updated: ${new Date().toLocaleTimeString()}
+                    </div>
+                `;
+            } catch(e) {
+                statusDiv.innerHTML = `
+                    <div class="status error">
+                        <strong>Error:</strong> ${e.message}
+                    </div>
+                `;
+            }
+        }
+        
+        function goToCountdown() {
+            window.location.href = 'countdown.html';
+        }
+        
+        function goToMain() {
+            window.location.href = 'index.html';
+        }
+        
+        // Run test on load
+        testCountdown();
+        
+        // Auto-refresh every 5 seconds
+        setInterval(testCountdown, 5000);
+    </script>
+</body>
+</html>

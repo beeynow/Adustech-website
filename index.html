@@ -49,20 +49,35 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
     <!-- Countdown Redirect Script - Load before everything else -->
-    <script src="config.js"></script>
     <script>
-        // Check if countdown is active and redirect if necessary
+        // Inline countdown check to ensure it works on all devices including mobile
         (function() {
             // Only check if we're not already on the countdown page
             if (window.location.pathname.includes('countdown.html')) {
                 return;
             }
             
-            // Check if countdown is active
-            if (isCountdownActive()) {
-                // Redirect to countdown page
-                window.location.replace('countdown.html');
-            }
+            // Load config and check countdown
+            var script = document.createElement('script');
+            script.src = 'config.js';
+            script.onload = function() {
+                try {
+                    // Check if countdown is active
+                    if (typeof isCountdownActive === 'function' && isCountdownActive()) {
+                        // Redirect to countdown page immediately
+                        console.log('Countdown is active - redirecting to countdown page');
+                        window.location.href = 'countdown.html';
+                    } else {
+                        console.log('Countdown is not active - showing main website');
+                    }
+                } catch (e) {
+                    console.error('Error checking countdown:', e);
+                }
+            };
+            script.onerror = function() {
+                console.error('Failed to load config.js');
+            };
+            document.head.appendChild(script);
         })();
     </script>
     
